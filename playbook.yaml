@@ -1,0 +1,24 @@
+---
+ -  hosts: localhost
+    connection: local
+    vars_files:
+      - vars/main.yml
+    tasks:
+      - name: create a cloud function
+        google.cloud.gcp_cloudfunctions_cloud_function:
+          name: test_object
+          runtime: 'nodejs14'
+          location: "{{location}}"
+          entry_point: helloWorld
+          source_archive_url: gs://test_bucket_tmt/function-source.zip
+          trigger_http: 'true'
+          project: "{{project_id}}"
+          auth_kind: serviceaccount
+          service_account_file: "{{service_account_file}}"
+          state: present
+      - name: get info on a cloud function
+        gcp_cloudfunctions_cloud_function_info:
+          location: "{{location}}"
+          project: "{{project_id}}"
+          auth_kind: serviceaccount
+          service_account_file: "{{service_account_file}}"

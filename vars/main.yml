@@ -1,0 +1,3 @@
+location: us-central1
+service_account_file: service.json
+project_id: learningcloud-340015
